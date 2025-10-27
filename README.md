@@ -18,7 +18,7 @@
 <p align="center">
 <strong>SPFSplatV2</strong> efficiently leverages masked attention to predict target poses while simultaneously predicting 3D Gaussians from unposed sparse images, without requiring ground-truth poses during either training or inference. 
 
-🎉 We’re currently organizing the code and preparing the pretrained models. Everything will be released soon -- stay tuned! 🎉
+🎉 We’re currently organizing the code and preparing the pretrained models. Everything will be released soon -- stay tuned! 
 </p>
 <br>
 
