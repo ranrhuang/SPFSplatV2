@@ -1,5 +1,5 @@
 <p align="center">
-  <h2 align="center"> <img src="https://github.com/ranrhuang/ranrhuang.github.io/raw/master/spfsplatv2/static/image/icon_v3.png" width="20" style="position: relative; top: 1px;"> SPFSplatV2  <br> Efficient Self-Supervised Pose-Free 3D Gaussian Splatting <br> from Sparse Views </h2>
+  <h2 align="center"> <img src="https://github.com/ranrhuang/ranrhuang.github.io/raw/master/spfsplatv2/static/image/icon.png" width="20" style="position: relative; top: 1px;"> SPFSplatV2  <br> Efficient Self-Supervised Pose-Free 3D Gaussian Splatting <br> from Sparse Views </h2>
  <p align="center">
     <a href="https://ranrhuang.github.io/">Ranran Huang</a>
     ·
@@ -10,13 +10,15 @@
 </p>
 <p align="center">
   <a href="">
-    <img src="https://github.com/ranrhuang/ranrhuang.github.io/raw/master/spfsplatv2/static/image/framework_v6.svg" alt="Teaser" width="90%">
+    <img src="https://github.com/ranrhuang/ranrhuang.github.io/raw/master/spfsplatv2/static/image/framework.svg" alt="Teaser" width="90%">
   </a>
 </p>
 
 
 <p align="center">
 <strong>SPFSplatV2</strong> efficiently leverages masked attention to predict target poses while simultaneously predicting 3D Gaussians from unposed sparse images, without requiring ground-truth poses during either training or inference. 
+
+🔧 Built on our ICCV version [SPFSplat](https://github.com/ranrhuang/SPFSplat), this work introduces improved performance, higher training efficiency, and an extended design supporting VGGT. For more details, check out our paper! 📄✨
 
 
 <!-- TABLE OF CONTENTS -->
@@ -174,7 +176,7 @@ We follow the [pixelSplat](https://github.com/dcharatan/pixelsplat) camera syste
 The camera extrinsic matrices are OpenCV-style camera-to-world matrices ( +X right, +Y down, +Z camera looks into the screen).
 
 ## Acknowledgements
-This project is built upon these excellent repositories: [SPFSplat] (https://github.com/ranrhuang/SPFSplat), [NoPoSplat](https://github.com/cvg/NoPoSplat), [pixelSplat](https://github.com/dcharatan/pixelsplat), [DUSt3R](https://github.com/naver/dust3r), and [CroCo](https://github.com/naver/croco). We thank the original authors for their excellent work.
+This project is built upon these excellent repositories: [SPFSplat](https://github.com/ranrhuang/SPFSplat), [NoPoSplat](https://github.com/cvg/NoPoSplat), [pixelSplat](https://github.com/dcharatan/pixelsplat), [DUSt3R](https://github.com/naver/dust3r), and [CroCo](https://github.com/naver/croco). We thank the original authors for their excellent work.
 
 
 ## Citation
