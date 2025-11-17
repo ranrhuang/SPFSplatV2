@@ -1,0 +1,3 @@
+name: masked_vggt
+intrinsics_embed_loc: 'none'
+pretrained: true

@@ -1,0 +1,70 @@
+# @package _global_
+
+defaults:
+  - /dataset@_group_.re10k: re10k
+  - override /model/encoder: spfsplatv2-l
+  - override /model/encoder/backbone: masked_vggt
+  - override /model/decoder: splatting_cuda
+  - override /loss: [mse, lpips, reproj]
+
+wandb:
+  name: re10k
+  tags: [re10k, 224x224]
+  project: spfsplatv2-l
+
+loss:
+  reproj:
+    weight: 0.001
+    total_iterations: 400_001
+
+ 
+
+model:
+  encoder:
+    backbone:
+      intrinsics_embed_loc: decoder
+
+
+
+
+dataset:
+  re10k:
+    input_image_shape: [224, 224]
+    # input_image_shape: [294, 518]
+    make_baseline_1: true
+    view_sampler:
+      warm_up_steps: 200_000
+      num_target_views: 1
+      num_context_views: 2
+      max_distance_between_context_views: 150
+
+optimizer:
+  lr: 1e-4
+  warm_up_steps: 2000
+  backbone_lr_multiplier: 0.1
+  min_lr_multiplier: 0.01
+
+data_loader:
+  train:
+    batch_size: 10
+
+trainer:
+  max_steps: 400_001
+  val_check_interval: 10000
+
+checkpointing:
+  every_n_train_steps: 10000
+  save_weights_only: false
+  save_top_k: 1
+
+
+train:
+  training_context: false
+
+test:
+  output_path: outputs/test/spfsplatv2-l
+  align_pose: false
+  compute_scores: true
+  save_image: true
+  save_video: false
+  save_compare: false

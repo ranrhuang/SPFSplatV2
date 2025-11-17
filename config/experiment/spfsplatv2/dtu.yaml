@@ -1,0 +1,66 @@
+# @package _global_
+
+defaults:
+  - /dataset@_group_.re10k: re10k
+  - override /model/encoder: spfsplatv2
+  - override /model/encoder/backbone: masked_croco_multi
+  - override /model/decoder: splatting_cuda
+  - override /loss: [mse, lpips, reproj]
+
+wandb:
+  name: dtu
+  tags: [dtu, 256x256]
+  project: spfsplatv2
+
+loss:
+  reproj:
+    weight: 0.0
+    total_iterations: 300_001
+ 
+
+model:
+  encoder:
+    backbone:
+      name: masked_croco_multi
+
+    pretrained_weights: './pretrained_weights/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth'
+
+
+
+dataset:
+  re10k:
+    roots: [datasets/dtu]
+    make_baseline_1: true
+    skip_bad_shape: false
+
+optimizer:
+  lr: 1e-4
+  warm_up_steps: 2000
+  backbone_lr_multiplier: 0.1
+
+data_loader:
+  train:
+    batch_size: 16
+
+trainer:
+  max_steps: 300_001
+  val_check_interval: 5000
+
+checkpointing:
+  every_n_train_steps: 10000
+  save_weights_only: false
+  save_top_k: 1
+
+
+train:
+  training_context: false
+
+test:
+  output_path: outputs/test/spfsplatv2
+  align_pose: false
+  pose_align_steps: 200
+  opt_lr:  0.0005
+  compute_scores: true
+  save_image: true
+  save_video: false
+  save_compare: false

@@ -1,0 +1,12 @@
+name: masked_croco_multi
+
+model: ViTLarge_BaseDecoder
+patch_embed_cls: PatchEmbedDust3R
+asymmetry_decoder: true
+
+intrinsics_embed_loc: 'decoder'
+intrinsics_embed_degree: 4
+intrinsics_embed_type: 'token'
+
+pose_embed_loc: 'decoder'
+pose_embed_type: 'learnable_token'

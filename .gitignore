@@ -1,0 +1,8 @@
+*.sh
+outputs/
+checkpoints
+datasets
+lightning_logs/
+pretrained_weights
+upload_weights.py
+*toml
