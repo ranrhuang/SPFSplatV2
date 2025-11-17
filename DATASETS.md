@@ -56,3 +56,7 @@ Please note that you will need to update the dataset paths in the aforementioned
 
 ### DTU
 We follow [NoPoSplat](https://github.com/cvg/NoPoSplat) to test on DTU. You can download processed DTU datasets from [here](https://drive.google.com/file/d/1Bd9il_O1jjom6Lk9NP77K8aeQP0d9eEt/view?usp=drive_link).
+
+### ScanNet++
+
+We follow [NoPoSplat](https://github.com/cvg/NoPoSplat) to test on DTU. You can download processed ScanNet++ datasets from [here](https://drive.google.com/file/d/1bmkNjXuWLhAOkf-6liS0yyARCybZyQSE/view?usp=sharing).

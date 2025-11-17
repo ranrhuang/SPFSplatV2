@@ -1,5 +1,5 @@
 <p align="center">
-  <h2 align="center"> <img src="https://github.com/ranrhuang/ranrhuang.github.io/raw/master/spfsplatv2/static/image/icon_v3.png" width="20" style="position: relative; top: 1px;"> SPFSplatV2  <br> Efficient Self-Supervised Pose-Free 3D Gaussian Splatting from Sparse Views </h2>
+  <h2 align="center"> <img src="https://github.com/ranrhuang/ranrhuang.github.io/raw/master/spfsplatv2/static/image/icon_v3.png" width="20" style="position: relative; top: 1px;"> SPFSplatV2  <br> Efficient Self-Supervised Pose-Free 3D Gaussian Splatting <br> from Sparse Views </h2>
  <p align="center">
     <a href="https://ranrhuang.github.io/">Ranran Huang</a>
     ·
@@ -71,7 +71,7 @@ cd ../../../../../..
 ```
 
 ## Pre-trained Checkpoints
-Our models are hosted on [Hugging Face](https://huggingface.co/RanranHuang/SPFSplat) 🤗
+Our models are hosted on [Hugging Face](https://huggingface.co/RanranHuang/SPFSplatV2) 🤗
 
 |                                                    Model name                                                    | Training resolutions | Training data | Training settings |
 |:----------------------------------------------------------------------------------------------------------------:|:--------------------:|:-------------:|:-------------:|
@@ -79,6 +79,8 @@ Our models are hosted on [Hugging Face](https://huggingface.co/RanranHuang/SPFSp
 |                  [acid_spfsplatv2.ckpt]( https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/acid_spfsplatv2.ckpt )                  |        256x256       |     acid      | ACID, 2 views, MASt3R-based |
 |                 [re10k_spfsplatv2l.ckpt]( https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/re10k_spfsplatv2l.ckpt)                  |        256x256       |     re10k     | RE10K, 2 views, VGGT-based |
 |                  [acid_spfsplatv2l.ckpt]( https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/acid_spfsplatv2l.ckpt )                  |        256x256       |     acid      | ACID, 2 views, VGGT-based |
+|                 [re10k_spfsplatv2_10view.ckpt]( https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/re10k_spfsplatv2_10view.ckpt)                  |        256x256       |     re10k     | RE10K, 10 views,  MASt3R-based|
+|                 [re10k_spfsplatv2l_10view.ckpt]( https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/re10k_spfsplatv2l_10view.ckpt)                  |        256x256       |     re10k     | RE10K, 10 views, VGGT-based |
 
 We assume the downloaded weights are located in the `pretrained_weights` directory.
 
@@ -94,17 +96,27 @@ Please refer to [DATASETS.md](DATASETS.md) for dataset preparation.
 2. Train with:
 
 ```bash
-# 2 view on MASt3R-based architecture
+# 2 view on SPFSplatV2 (MASt3R-based architecture)
 python -m src.main +experiment=spfsplatv2/re10k wandb.mode=online wandb.name=re10k_spfsplatv2
 
 
-# 2 view on VGGT-based architecture
+# 2 view on SPFSplatV2-L (VGGT-based architecture)
 python -m src.main +experiment=spfsplatv2-l/re10k wandb.mode=online wandb.name=re10k_spfsplatv2l
+
+
+# multi view training on SPFSplatV2. We set train.random_drop_context_views=true. You can finetune from the 2-view checkpoint and use multiple GPUs to reduce the training time.
+python -m src.main +experiment=spfsplatv2/re10k_10view wandb.mode=online wandb.name=re10k_spfsplatv2_10view
+
+# multi view training on SPFSplatV2-L. We set train.random_drop_context_views=true. 
+python -m src.main +experiment=spfsplatv2-l/re10k_10view wandb.mode=online wandb.name=re10k_spfsplatv2-l_10view
+
+
+
 
 ```
 
 ### Evaluation
-#### Novel View Synthesis and Pose Estimation
+#### Novel View Synthesis and Pose Estimation on SPFSplatV2 (MASt3R-based architecture)
 ```bash
 # RealEstate10K on MASt3R-based architecture(enable test.align_pose=true if using evaluation-time pose alignment)
 python -m src.main +experiment=spfsplatv2/re10k mode=test wandb.name=re10k \
@@ -120,6 +132,19 @@ python -m src.main +experiment=spfsplatv2/acid mode=test wandb.name=acid \
   checkpointing.load=./pretrained_weights/acid_spfsplatv2.ckpt \
   test.save_image=false test.align_pose=false
 
+
+# 10 view
+python -m src.main +experiment=spfsplatv2/re10k mode=test wandb.name=re10k_10view \
+    dataset.re10k.view_sampler.num_context_views=10 \
+    dataset/view_sampler@dataset.re10k.view_sampler=evaluation \
+    dataset.re10k.view_sampler.index_path=assets/evaluation_index_re10k.json \
+    checkpointing.load=./pretrained_weights/re10k_spfsplatv2_10view.ckpt \
+    test.save_image=false test.align_pose=false 
+    
+```
+
+#### Novel View Synthesis and Pose Estimation on SPFSplatV2-L (VGGT-based architecture)
+```bash
 # RealEstate10K on VGGT-based architecture(enable test.align_pose=true if using evaluation-time pose alignment)
 python -m src.main +experiment=spfsplatv2-l/re10k mode=test wandb.name=re10k \
     dataset/view_sampler@dataset.re10k.view_sampler=evaluation \
@@ -133,16 +158,23 @@ python -m src.main +experiment=spfsplatv2-l/acid mode=test wandb.name=acid \
   dataset.re10k.view_sampler.index_path=assets/evaluation_index_acid.json \
   checkpointing.load=./pretrained_weights/acid_spfsplatv2l.ckpt \
   test.save_image=false test.align_pose=false
-    
-```
 
+# 10 view
+python -m src.main +experiment=spfsplatv2-l/re10k mode=test wandb.name=re10k_10view \
+    dataset.re10k.view_sampler.num_context_views=10 \
+    dataset/view_sampler@dataset.re10k.view_sampler=evaluation \
+    dataset.re10k.view_sampler.index_path=assets/evaluation_index_re10k.json \
+    checkpointing.load=./pretrained_weights/re10k_spfsplatv2l_10view.ckpt \
+    test.save_image=false test.align_pose=false 
+
+```
 
 ## Camera Conventions
 We follow the [pixelSplat](https://github.com/dcharatan/pixelsplat) camera system. The camera intrinsic matrices are normalized (the first row is divided by image width, and the second row is divided by image height).
 The camera extrinsic matrices are OpenCV-style camera-to-world matrices ( +X right, +Y down, +Z camera looks into the screen).
 
 ## Acknowledgements
-This project is built upon these excellent repositories: [NoPoSplat](https://github.com/cvg/NoPoSplat), [pixelSplat](https://github.com/dcharatan/pixelsplat), [DUSt3R](https://github.com/naver/dust3r), and [CroCo](https://github.com/naver/croco). We thank the original authors for their excellent work.
+This project is built upon these excellent repositories: [SPFSplat] (https://github.com/ranrhuang/SPFSplat), [NoPoSplat](https://github.com/cvg/NoPoSplat), [pixelSplat](https://github.com/dcharatan/pixelsplat), [DUSt3R](https://github.com/naver/dust3r), and [CroCo](https://github.com/naver/croco). We thank the original authors for their excellent work.
 
 
 ## Citation

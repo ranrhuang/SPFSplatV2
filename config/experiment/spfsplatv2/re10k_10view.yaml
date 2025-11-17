@@ -2,38 +2,39 @@
 
 defaults:
   - /dataset@_group_.re10k: re10k
-  - override /model/encoder: spfsplatv2-l
-  - override /model/encoder/backbone: masked_vggt
+  - override /model/encoder: spfsplatv2
+  - override /model/encoder/backbone: masked_croco_multi
   - override /model/decoder: splatting_cuda
   - override /loss: [mse, lpips, reproj]
 
 wandb:
   name: re10k
-  tags: [re10k, 224x224]
-  project: spfsplatv2-l
+  tags: [re10k, 256x256]
+  project: spfsplatv2
 
 loss:
   reproj:
     weight: 0.001
-    total_iterations: 400_001
-
+    total_iterations: 600_001
  
-
 model:
   encoder:
     backbone:
-      intrinsics_embed_loc: decoder
+      name: masked_croco_multi
+
+
+    gs_params_head_type: dpt_gs
+    pose_free: true
+    pretrained_weights: './pretrained_weights/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth'
 
 
 dataset:
   re10k:
-    input_image_shape: [224, 224]
-    # input_image_shape: [294, 518]
     make_baseline_1: true
     view_sampler:
-      warm_up_steps: 200_000
+      warm_up_steps: 300_000
       num_target_views: 1
-      num_context_views: 2
+      num_context_views: 10
       max_distance_between_context_views: 150
 
 optimizer:
@@ -44,10 +45,10 @@ optimizer:
 
 data_loader:
   train:
-    batch_size: 10
+    batch_size: 3
 
 trainer:
-  max_steps: 400_001
+  max_steps: 600_001
   val_check_interval: 10000
 
 checkpointing:
@@ -58,9 +59,10 @@ checkpointing:
 
 train:
   training_context: false
+  random_drop_context_views: true
 
 test:
-  output_path: outputs/test/spfsplatv2-l
+  output_path: outputs/test/spfsplatv2
   align_pose: false
   compute_scores: true
   save_image: true

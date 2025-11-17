@@ -207,7 +207,7 @@ class ModelWrapper(LightningModule):
         if self.train_cfg.random_drop_context_views:
             v_cxt = batch["context"]["image"].shape[1]
             selected_indices = dropout_context_views(v_cxt)
-            for key in batch["context"].keys():
+            for key in ["image", "intrinsics", "extrinsics", "index", "near", "far"]:
                 batch["context"][key] = batch["context"][key][:, selected_indices]
 
         if self.train_cfg.random_drop_target_views:
@@ -651,7 +651,7 @@ class ModelWrapper(LightningModule):
             v_cxt = batch["context"]["image"].shape[1]
             selected_indices = dropout_context_views(v_cxt)
             # Apply selection to all context elements
-            for key in batch["context"].keys():
+            for key in ["image", "intrinsics", "extrinsics", "index", "near", "far"]:
                 batch["context"][key] = batch["context"][key][:, selected_indices]
 
         
@@ -664,10 +664,11 @@ class ModelWrapper(LightningModule):
 
 
         if self.global_rank == 0:
+            print(batch['context']['index'])
             print(
                 f"validation step {self.global_step}; "
                 f"scene = {batch['scene']}; "
-                f"context = {batch['context']['index'].tolist()}"
+                f"context = {batch['context']['index'].tolist()}; "
                 f"target = {batch['target']['index'].tolist()}"
             )
 

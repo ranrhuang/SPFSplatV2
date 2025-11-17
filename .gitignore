@@ -6,3 +6,8 @@ lightning_logs/
 pretrained_weights
 upload_weights.py
 *toml
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyc

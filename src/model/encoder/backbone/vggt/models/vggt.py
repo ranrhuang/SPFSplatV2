@@ -12,8 +12,7 @@ from .aggregator import Aggregator
 from ..heads.camera_head import CameraHead
 from ..heads.dpt_head import DPTHead
 from ..heads.track_head import TrackHead
-from ..heads.pose_head import PoseHead
-from ..heads.intrinsics_head import IntrinsicsHead
+
 
 class VGGT(nn.Module, PyTorchModelHubMixin):
     def __init__(self, img_size=518, patch_size=14, embed_dim=1024, intrinsics_embed_loc='none'):
