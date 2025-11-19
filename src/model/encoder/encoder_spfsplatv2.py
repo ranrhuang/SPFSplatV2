@@ -174,7 +174,6 @@ class EncoderSPFSplatV2(Encoder[EncoderSPFSplatV2Cfg]):
         global_step: int = 0,
         visualization_dump: Optional[dict] = None,
         target: Optional[dict] = None,
-        warmup_pts3d: bool = False,
     ) :
         device = context["image"].device
         b, v_cxt, _, h, w = context["image"].shape

@@ -116,33 +116,18 @@ def pose_encoding_to_extri_intri(
 
         if build_intrinsics:
             H, W = image_size_hw
-            # print("image_size_hw", image_size_hw)
-            # print("fov_h", fov_h, "fov_w", fov_w)
-            # fy = (H / 2.0) / torch.tan(fov_h / 2.0)
-            # fx = (W / 2.0) / torch.tan(fov_w / 2.0)
-
-            # # print("fx fy", fx, fy)
-            # intrinsics = torch.zeros(pose_encoding.shape[:2] + (3, 3), device=pose_encoding.device)
-            # intrinsics[..., 0, 0] = fx
-            # intrinsics[..., 1, 1] = fy
-            # intrinsics[..., 0, 2] = W / 2
-            # intrinsics[..., 1, 2] = H / 2
-            # intrinsics[..., 2, 2] = 1.0  # Set the homogeneous coordinate to 1
-
             fy = (H / 2.0) / torch.tan(fov_h / 2.0)
-            fy = fy[:,0:1].repeat(1,pose_encoding.shape[1])
-            fx = fy
-            
-            # print("fx", fx, fy)
+            fx = (W / 2.0) / torch.tan(fov_w / 2.0)
 
             # print("fx fy", fx, fy)
             intrinsics = torch.zeros(pose_encoding.shape[:2] + (3, 3), device=pose_encoding.device)
-            # print("intrinsics", intrinsics.shape)
             intrinsics[..., 0, 0] = fx
             intrinsics[..., 1, 1] = fy
             intrinsics[..., 0, 2] = W / 2
             intrinsics[..., 1, 2] = H / 2
             intrinsics[..., 2, 2] = 1.0  # Set the homogeneous coordinate to 1
+
+           
     else:
         raise NotImplementedError
 

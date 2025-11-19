@@ -80,11 +80,8 @@ class EncoderSPFSplatV2L(Encoder[EncoderSPFSplatV2LCfg]):
 
         self.backbone = get_backbone(cfg.backbone, 3)
 
-        self.pose_free = cfg.pose_free
-        if self.pose_free:
-            self.gaussian_adapter = UnifiedGaussianAdapter(cfg.gaussian_adapter)
-        else:
-            self.gaussian_adapter = GaussianAdapter(cfg.gaussian_adapter)
+        self.gaussian_adapter = UnifiedGaussianAdapter(cfg.gaussian_adapter)
+        
 
         self.patch_size = 14
         self.raw_gs_dim = 1 + self.gaussian_adapter.d_in  # 1 for opacity
