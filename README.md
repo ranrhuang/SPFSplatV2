@@ -75,14 +75,19 @@ cd ../../../../../..
 ## Pre-trained Checkpoints
 Our models are hosted on [Hugging Face](https://huggingface.co/RanranHuang/SPFSplatV2) 🤗
 
-|                                                    Model name                                                    | Training resolutions | Training data | Training settings |
-|:----------------------------------------------------------------------------------------------------------------:|:--------------------:|:-------------:|:-------------:|
-|                 [re10k_spfsplatv2.ckpt]( https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/re10k_spfsplatv2.ckpt)                  |        256x256       |     re10k     | RE10K, 2 views,  MASt3R-based|
-|                  [acid_spfsplatv2.ckpt]( https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/acid_spfsplatv2.ckpt )                  |        256x256       |     acid      | ACID, 2 views, MASt3R-based |
-|                 [re10k_spfsplatv2l.ckpt]( https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/re10k_spfsplatv2l.ckpt)                  |        256x256       |     re10k     | RE10K, 2 views, VGGT-based |
-|                  [acid_spfsplatv2l.ckpt]( https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/acid_spfsplatv2l.ckpt )                  |        256x256       |     acid      | ACID, 2 views, VGGT-based |
-|                 [re10k_spfsplatv2_10view.ckpt]( https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/re10k_spfsplatv2_10view.ckpt)                  |        256x256       |     re10k     | RE10K, 10 views,  MASt3R-based|
-|                 [re10k_spfsplatv2l_10view.ckpt]( https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/re10k_spfsplatv2l_10view.ckpt)                  |        256x256       |     re10k     | RE10K, 10 views, VGGT-based |
+`mixed` denotes joint training on RE10K, DL3DV, WildRGB-D, and CO3Dv2.
+
+| Model name | Training data | Views | Arch. | Resolution |
+|:-----------|:-------------:|:-----:|:-----:|:----------:|
+| [re10k_spfsplatv2.ckpt](https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/re10k_spfsplatv2.ckpt) | re10k | 2 | MASt3R | 256x256 |
+| [acid_spfsplatv2.ckpt](https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/acid_spfsplatv2.ckpt) | acid | 2 | MASt3R | 256x256 |
+| [re10k_spfsplatv2_10view.ckpt](https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/re10k_spfsplatv2_10view.ckpt) | re10k | 2-10 | MASt3R | 256x256 |
+| [re10k_spfsplatv2l.ckpt](https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/re10k_spfsplatv2l.ckpt) | re10k | 2 | VGGT | 224x224 |
+| [acid_spfsplatv2l.ckpt](https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/acid_spfsplatv2l.ckpt) | acid | 2 | VGGT | 224x224 |
+| [re10k_spfsplatv2l_10view.ckpt](https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/re10k_spfsplatv2l_10view.ckpt) | re10k | 2-10 | VGGT | 224x224 |
+| [mixed_spfsplatv2l.ckpt](https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/mixed_spfsplatv2l.ckpt) | mixed | 2 | VGGT | 224x224 |
+| [mixed_spfsplatv2l_10view.ckpt](https://huggingface.co/RanranHuang/SPFSplatV2/resolve/main/mixed_spfsplatv2l_10view.ckpt) | mixed | 2-10 | VGGT | 224x224 |
+
 
 We assume the downloaded weights are located in the `pretrained_weights` directory.
 
